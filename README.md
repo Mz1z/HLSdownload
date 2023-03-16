@@ -22,10 +22,15 @@ requests
 
 ## usage
 
-main.py下面修改直播间房号即可：
+main.py下面修改直播间房号即可【下载完的视频存放在tmp文件夹中】：
 
 ```python
 if __name__ == '__main__':
 	download(xxxxxxx)   # 填写房间号
 ```
 
+
+
+## problem
+
+有的特殊流地址用正则处理会出问题，有待修复。

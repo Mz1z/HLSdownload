@@ -15,7 +15,11 @@ def flush_m3u8(line):
 	first = True   # 第一次刷新要快，不然会丢帧
 	while True:
 		print('  > flush m3u8...')
-		m3u8 = requests.get(line).text    # get m3u8
+		try:
+			m3u8 = requests.get(line).text    # get m3u8
+		except Exception as e:
+			print(f'> [flush_m3u8] err: {e}')
+			continue
 		rows = m3u8.split('\n')
 		_num = 0     # 计算延时
 		for row in rows:    # 整理出视频地址
@@ -52,7 +56,7 @@ def download(room):
 
 	# 读取m3u8文件
 	m3u8 = requests.get(line).text
-	# print('\n' + m3u8)
+	print('\n' + m3u8)
 
 	# 获取#EXT-X-MAP地址
 	# 这个文件要作为每一个文件的文件头
@@ -72,8 +76,12 @@ def download(room):
 			if len(urls) != 0:
 				fname = urls.pop(0)  # pop取出第一个元素fname
 				url = pre_url + fname + token
-				r = requests.get(url)
-				f.write(r.content)
+				try:
+					r = requests.get(url)
+					f.write(r.content)
+				except Exception as e:
+					print(f'> err: {e}')
+					time.sleep(1)
 				print(f'  > downloaded: {fname}')
 			else:
 				time.sleep(2)
@@ -81,7 +89,7 @@ def download(room):
 	print('over')
 
 if __name__ == '__main__':
-	download(27036483)
+	download(21728563)
 
 
 
